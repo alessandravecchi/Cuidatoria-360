@@ -791,7 +791,7 @@ function Footer() {
         </div>
         <div className="justify-self-start md:justify-self-end">
           <div className="text-sm text-white/70">Contato</div>
-          <div className="text-lg font-semibold">contato@cuidatoria.org</div>
+          <div className="text-lg font-semibold">acolhimento@cuidatoria.com.br</div>
           <div className="text-white/60">Florianópolis • Santa Catarina</div>
         </div>
       </div>
