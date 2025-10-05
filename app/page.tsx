@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import React from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -37,8 +38,10 @@ export default function ONGDoFuturoPage() {
   const whatsNumber = "+554899832081"; // seu número no formato E.164
   const preMsg = encodeURIComponent("Olá! Tenho interesse no programa ONG do Futuro.");
   const preMsgJoin = encodeURIComponent("Olá! Quero participar do ONG do Futuro.");
-  const preMsgTotals = encodeURIComponent("Olá! Sobre os totais do projeto, quero avançar no Cenário B (com HUB).");
-  const pdfUrl = "/projeto-ong-do-futuro.pdf"; // link real do PDF
+
+  // >>> nomes de arquivos solicitados <<<
+  const pdfProjetoUrl = "/projeto-ong-do-futuro.pdf";
+  const pdfOnePagerUrl = "/Cuidatoria.pdf";
 
   return (
     <div
@@ -52,17 +55,19 @@ export default function ONGDoFuturoPage() {
         } as React.CSSProperties
       }
     >
-      <Hero pdfUrl={pdfUrl} whatsNumber={whatsNumber} preMsgJoin={preMsgJoin} />
+      <Hero pdfUrl={pdfProjetoUrl} whatsNumber={whatsNumber} preMsgJoin={preMsgJoin} />
       <ImpactNumbers />
       <WhySection />
       <Steps />
       <SpaceHub />
-      {/* NOVA SEÇÃO — TOTAIS DO PROJETO */}
-      <TotaisProjeto
-        pdfUrl={pdfUrl}
+
+      <ImpactoEBeneficios
         whatsNumber={whatsNumber}
-        preMsgTotals={preMsgTotals}
+        pdfUrl={pdfOnePagerUrl} // one-pager: Cuidatoria.pdf
       />
+
+      <TotaisProjeto pdfUrl={pdfProjetoUrl} />
+
       <SponsorsCTA />
       <Team />
       <Proponente />
@@ -86,7 +91,7 @@ export default function ONGDoFuturoPage() {
   );
 }
 
-/* --------- Seções --------- */
+/* ---------- Seções ---------- */
 
 function Hero({
   pdfUrl,
@@ -144,16 +149,7 @@ function Hero({
               </a>
             </Button>
 
-            {/* Botão de destaque (sem branco) */}
-            <Button
-              asChild
-              size="lg"
-              className="bg-gradient-to-r from-[var(--cui-gold)] to-[var(--cui-orange)] text-[var(--cui-ink)] hover:opacity-90"
-            >
-              <a href={pdfUrl} download className="flex items-center gap-2">
-                <Download className="h-5 w-5" /> Baixar PDF do Projeto
-              </a>
-            </Button>
+            
           </div>
 
           <div className="mt-6 flex items-center gap-6 text-white/70">
@@ -267,58 +263,30 @@ function WhySection() {
   );
 }
 
-/** SEÇÃO — Espaço de Acolhimento (Poupa Tempo do 3º Setor) com IMAGEM */
+/** SEÇÃO — Espaço de Acolhimento com IMAGEM */
 function SpaceHub() {
   const bullets = [
-    {
-      icon: HelpCircle,
-      title: "Acolhimento & Orientação",
-      desc:
-        "Balcão presencial para tirar dúvidas, abrir chamados e receber direcionamento individual sobre documentos, cadastros e rotinas.",
-    },
-    {
-      icon: BookOpenCheck,
-      title: "Capacitações contínuas",
-      desc:
-        "Agenda mensal com oficinas e mentorias presenciais/híbridas: gestão, portfólio, escrita de projetos, prestação de contas e compliance.",
-    },
-    {
-      icon: ClipboardCheck,
-      title: "Regularização na prática",
-      desc:
-        "Clínicas jurídicas e contábeis com checklists, modelos e conferência documental para acelerar estatutos, atas e certidões.",
-    },
-    {
-      icon: Target,
-      title: "Plantões Edital Certo",
-      desc:
-        "Análise de editais, aderência projeto–edital e criação/ajustes guiados para submissão com mais chance de aprovação.",
-    },
+    { icon: HelpCircle, title: "Acolhimento & Orientação", desc: "Balcão presencial para dúvidas e direcionamento individual." },
+    { icon: BookOpenCheck, title: "Capacitações contínuas", desc: "Oficinas e mentorias presenciais/híbridas mensais." },
+    { icon: ClipboardCheck, title: "Regularização na prática", desc: "Checklists, modelos e conferência documental." },
+    { icon: Target, title: "Plantões Edital Certo", desc: "Análise de editais e criação guiada de projetos." },
   ] as const;
 
   return (
-    <section
-      id="espaco"
-      className="relative py-16 border-y border-white/10 bg-gradient-to-b from-white/5 to-transparent"
-    >
+    <section id="espaco" className="relative py-16 border-y border-white/10 bg-gradient-to-b from-white/5 to-transparent">
       <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-12 gap-8 items-start">
-        {/* Texto à esquerda */}
         <div className="lg:col-span-7">
           <div className="flex items-center gap-3">
             <div className="h-10 w-10 rounded-full bg-[var(--cui-teal)]/20 flex items-center justify-center">
               <Sparkles className="h-5 w-5 text-[var(--cui-teal)]" />
             </div>
             <h2 className="text-3xl md:text-4xl font-black">
-              Espaço de Acolhimento —{" "}
-              <span className="text-[var(--cui-teal)]">“Poupa Tempo do 3º Setor”</span>
+              Espaço de Acolhimento — <span className="text-[var(--cui-teal)]">“Poupa Tempo do 3º Setor”</span>
             </h2>
           </div>
 
           <p className="mt-4 text-white/80 max-w-3xl">
-            Com a locação do espaço, criaremos um ponto fixo de atendimento para as OSC de Santa Catarina — um
-            ambiente acolhedor e resolutivo onde as organizações podem buscar informações, participar de capacitações,
-            receber orientação para regularização e preparar projetos. É o equivalente a um <strong>Poupa Tempo</strong>,
-            só que dedicado ao <strong>3º Setor</strong>.
+            Um ponto fixo em Florianópolis/SC para atendimento, capacitações e preparação de projetos — o “Poupa Tempo do 3º Setor”.
           </p>
 
           <div className="mt-4 flex flex-wrap gap-4 text-white/70">
@@ -331,29 +299,18 @@ function SpaceHub() {
           </div>
         </div>
 
-        {/* Direita: IMAGEM + Bullets */}
         <div className="lg:col-span-5 space-y-5">
-          {/* IMAGEM DA FACHADA */}
           <div className="relative rounded-2xl p-[1.5px] bg-gradient-to-br from-[var(--cui-teal)]/50 via-white/10 to-[var(--cui-orange)]/40">
             <div className="relative rounded-2xl overflow-hidden bg-white/5 border border-white/10">
               <div className="relative w-full aspect-[16/9] sm:aspect-[4/3]">
-                <Image
-                  src="/images/cuidatoria-hub.png"   // coloque o arquivo em /public/images/
-                  alt="Fachada — Cuidatoria HUB do 3º Setor"
-                  fill
-                  priority
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 420px"
-                />
+                <Image src="/images/cuidatoria-hub.png" alt="Fachada — Cuidatoria HUB" fill priority className="object-cover" sizes="(max-width: 768px) 100vw, 420px" />
               </div>
               <div className="px-4 py-2 text-sm text-white/80 flex items-center gap-2">
-                <Sparkles className="h-4 w-4 text-[var(--cui-teal)]" />
-                Cuidatoria HUB do 3º Setor
+                <Sparkles className="h-4 w-4 text-[var(--cui-teal)]" /> Cuidatoria HUB do 3º Setor
               </div>
             </div>
           </div>
 
-          {/* BULLETS */}
           <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
             <ul className="grid gap-4">
               {bullets.map((b, i) => {
@@ -374,27 +331,154 @@ function SpaceHub() {
           </div>
         </div>
 
-        {/* Faixa de reforço */}
         <div className="lg:col-span-12 mt-2 rounded-xl border border-white/10 bg-gradient-to-r from-[var(--cui-teal)]/10 to-[var(--cui-orange)]/10 p-4 text-white/85">
-          <strong>Resultado esperado:</strong> atendimento mensal de dezenas de OSC, aumento de regularizações
-          concluídas, mais projetos prontos para editais e prestação de contas padronizada — tudo monitorado em
-          dashboard.
+          <strong>Resultado esperado:</strong> mais regularizações concluídas, projetos prontos para editais e prestação de contas padronizada — tudo monitorado em dashboard.
         </div>
       </div>
     </section>
   );
 }
 
-/** NOVA SEÇÃO — TOTAIS DO PROJETO (comparativo A vs B) */
-function TotaisProjeto({
-  pdfUrl,
-  whatsNumber,
-  preMsgTotals,
+/** ---------- Impacto Social e Benefícios (KPIs + bullets) ---------- */
+
+function Kpi({
+  label,
+  value,
+  suffix = "",
+  highlight = "teal",
 }: {
-  pdfUrl: string;
-  whatsNumber: string;
-  preMsgTotals: string;
+  label: string;
+  value: string;
+  suffix?: string;
+  highlight?: "teal" | "orange" | "gold";
 }) {
+  const color =
+    highlight === "orange"
+      ? "text-[var(--cui-orange)]"
+      : highlight === "gold"
+      ? "text-[var(--cui-gold)]"
+      : "text-[var(--cui-teal)]";
+
+  return (
+    <div className="rounded-2xl border border-white/10 bg-gradient-to-b from-white/5 to-transparent p-4 md:p-5 backdrop-blur-sm">
+      <div className={`text-3xl md:text-4xl font-black ${color}`}>
+        {value}
+        {suffix && <span className="text-white/80 text-2xl md:text-3xl ml-1">{suffix}</span>}
+      </div>
+      <div className="mt-1 text-white/80 text-sm md:text-base">{label}</div>
+    </div>
+  );
+}
+
+function ImpactoEBeneficios({ whatsNumber, pdfUrl }: { whatsNumber: string; pdfUrl: string }) {
+  const preMsg = encodeURIComponent("Olá! Gostaria de agendar uma apresentação do ONG do Futuro.");
+  return (
+    <section id="impacto" className="py-16">
+      <div className="max-w-7xl mx-auto px-6">
+        <h2 className="text-3xl md:text-5xl font-black mb-8">Impacto Social e Benefícios para o Mandato</h2>
+
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-4 mb-10">
+          <Kpi label="OSCs diagnosticadas" value="100" highlight="teal" />
+          <Kpi label="OSCs regularizadas (meta ≥)" value="80" highlight="teal" />
+          <Kpi label="Projetos aptos a edital (meta ≥)" value="70" highlight="orange" />
+          <Kpi label="Submissões a editais (meta ≥)" value="50" highlight="orange" />
+          <Kpi label="Meses de operação" value="9" highlight="gold" />
+          <Kpi label="HUB físico com atendimento" value="1" highlight="gold" />
+        </div>
+
+        <div className="grid lg:grid-cols-2 gap-6">
+          <div className="rounded-3xl border border-white/10 bg-white/5 p-6 md:p-8">
+            <div className="flex items-center gap-3 mb-5">
+              <div className="h-10 w-10 rounded-full bg-[var(--cui-teal)]/20 flex items-center justify-center">
+                <Users2 className="h-5 w-5 text-[var(--cui-teal)]" />
+              </div>
+              <h3 className="text-2xl md:text-3xl font-extrabold">Para a sociedade e as OSC</h3>
+            </div>
+            <ul className="space-y-5 text-white/90">
+              <li className="flex gap-3">
+                <CheckCircle2 className="h-6 w-6 mt-1 text-[var(--cui-teal)]" />
+                <span>Redução do tempo de regularização (checklists, clínicas e conferência documental).</span>
+              </li>
+              <li className="flex gap-3">
+                <Target className="h-6 w-6 mt-1 text-[var(--cui-teal)]" />
+                <span>Projetos mais competitivos: matriz lógica, banco de modelos e mentoria.</span>
+              </li>
+              <li className="flex gap-3">
+                <ClipboardCheck className="h-6 w-6 mt-1 text-[var(--cui-teal)]" />
+                <span>Prestação de contas padronizada, com modelos e fluxos prontos.</span>
+              </li>
+              <li className="flex gap-3">
+                <Building2 className="h-6 w-6 mt-1 text-[var(--cui-teal)]" />
+                <span>HUB presencial (“Poupa Tempo do 3º Setor”) para acolhimento, plantões e capacitações contínuas.</span>
+              </li>
+            </ul>
+            <div className="mt-6 rounded-xl border border-white/10 bg-black/30 p-4 text-white/85">
+              <strong>Efeito multiplicador:</strong> mais OSC aptas ⇒ mais captação, execução correta e serviços consistentes no território.
+            </div>
+          </div>
+
+          <div className="rounded-3xl border border-white/10 bg-white/5 p-6 md:p-8">
+            <div className="flex items-center gap-3 mb-5">
+              <div className="h-10 w-10 rounded-full bg-[var(--cui-gold)]/20 flex items-center justify-center">
+                <Crown className="h-5 w-5 text-[var(--cui-gold)]" />
+              </div>
+              <h3 className="text-2xl md:text-3xl font-extrabold">Para o mandato do deputado</h3>
+            </div>
+            <ul className="space-y-5 text-white/90">
+              <li className="flex gap-3">
+                <CheckCircle2 className="h-6 w-6 mt-1 text-[var(--cui-orange)]" />
+                <span><strong>Entregáveis mensais:</strong> relatórios e dashboard com indicadores por OSC, etapa e município.</span>
+              </li>
+              <li className="flex gap-3">
+                <ClipboardCheck className="h-6 w-6 mt-1 text-[var(--cui-orange)]" />
+                <span><strong>Transparência &amp; segurança:</strong> trilha, evidências e compliance na aplicação da emenda.</span>
+              </li>
+              <li className="flex gap-3">
+                <Target className="h-6 w-6 mt-1 text-[var(--cui-orange)]" />
+                <span><strong>Presença territorial:</strong> HUB como ponto de referência para cidadãos e OSC.</span>
+              </li>
+              <li className="flex gap-3">
+                <Building2 className="h-6 w-6 mt-1 text-[var(--cui-orange)]" />
+                <span><strong>Legado:</strong> capacidade instalada que permanece após o projeto (equipamentos &amp; processos).</span>
+              </li>
+            </ul>
+
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Button asChild className="bg-[var(--cui-teal)] hover:bg-[#27a196]">
+                <a
+                  href={`https://wa.me/${whatsNumber}?text=${preMsg}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2"
+                >
+                  <MessageCircle className="h-5 w-5" />
+                  Agendar apresentação (WhatsApp)
+                </a>
+              </Button>
+              <Button
+                asChild
+                className="bg-gradient-to-r from-[var(--cui-gold)] to-[var(--cui-orange)] text-[var(--cui-ink)] hover:opacity-90"
+              >
+                <a href={pdfUrl} download className="flex items-center gap-2">
+                  <FileText className="h-5 w-5" />
+                  Baixar Detalhamento (PDF)
+                </a>
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-6 text-sm text-white/70">
+          *Custo por OSC (estimado): <span className="text-white/90 font-semibold">R$ 3.444</span> (Cenário A) ou{" "}
+          <span className="text-white/90 font-semibold">R$ 4.154</span> (Cenário B com HUB).
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/** ---------- Totais do Projeto (comparativo A vs B) ---------- */
+function TotaisProjeto({ pdfUrl }: { pdfUrl: string }) {
   return (
     <section id="totais" className="py-16 border-t border-white/10 bg-white/5">
       <div className="max-w-7xl mx-auto px-6">
@@ -411,12 +495,10 @@ function TotaisProjeto({
         </p>
 
         <div className="mt-8 grid md:grid-cols-2 gap-6">
-          {/* Cenário A */}
+          {/* Cenário A — botão corrigido para degradê ouro→laranja */}
           <Card className="bg-white/5 border-white/10">
             <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <h3 className="text-xl font-bold">Cenário A — Metas 1–7</h3>
-              </div>
+              <h3 className="text-xl font-bold text-white">Cenário A — Metas 1–7</h3>
               <p className="mt-2 text-white/80">
                 Execução integral do método (diagnóstico → certificação) com operação e espaço locado.
               </p>
@@ -425,23 +507,15 @@ function TotaisProjeto({
                 <li>• Regularização, projetos para editais e prestação de contas</li>
                 <li>• Evento de certificação e relatórios consolidados</li>
               </ul>
-              <div className="mt-6 text-3xl font-black text-[var(--cui-teal)]">
-                R$ 344.400,00
-              </div>
-              <div className="mt-4 flex gap-3">
-                <Button asChild variant="outline" className="border-white/20 text-white hover:bg-white/10">
-                  <a href={pdfUrl} download>
+              <div className="mt-6 text-3xl font-black text-[var(--cui-teal)]">R$ 344.400,00</div>
+              <div className="mt-4">
+                <Button
+                  asChild
+                  className="bg-gradient-to-r from-[var(--cui-gold)] to-[var(--cui-orange)] text-[var(--cui-ink)] hover:opacity-90"
+                >
+                  <a href={pdfUrl} download className="flex items-center gap-2">
+                    <Download className="h-5 w-5" />
                     Baixar PDF
-                  </a>
-                </Button>
-                <Button asChild className="bg-[var(--cui-teal)] hover:bg-[#27a196]">
-                  <a
-                    href={`https://wa.me/${whatsNumber}?text=${encodeURIComponent(
-                      "Olá! Quero entender melhor o Cenário A (Metas 1–7)."
-                    )}`}
-                    target="_blank"
-                  >
-                    Falar sobre A
                   </a>
                 </Button>
               </div>
@@ -454,45 +528,32 @@ function TotaisProjeto({
               Recomendado
             </span>
             <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <h3 className="text-xl font-bold">Cenário B — Metas 1–8 (com HUB)</h3>
-              </div>
+              <h3 className="text-xl font-bold text-white">Cenário B — Metas 1–8 (com HUB)</h3>
               <p className="mt-2 text-white/80">
-                Tudo do Cenário A <strong>+ Equipamentos & Adequações do HUB</strong> para criar o
-                “Poupa Tempo do 3º Setor”.
+                Tudo do Cenário A <strong>+ Equipamentos & Adequações do HUB</strong> para criar o “Poupa Tempo do 3º Setor”.
               </p>
               <ul className="mt-4 space-y-2 text-white/85 text-sm">
                 <li>• Infraestrutura de acolhimento, capacitações e plantões</li>
                 <li>• Notebook(s), mobiliário, acessibilidade e audiovisual</li>
                 <li>• Atendimento contínuo e ganhos permanentes de capacidade</li>
               </ul>
-              <div className="mt-5 text-sm text-white/70">
-                R$ 344.400,00 + R$ 71.000,00
-              </div>
-              <div className="text-3xl font-black text-[var(--cui-orange)]">
-                R$ 415.400,00
-              </div>
-              <div className="mt-4 flex gap-3">
+              <div className="mt-5 text-sm text-white/70">R$ 344.400,00 + R$ 71.000,00</div>
+              <div className="text-3xl font-black text-[var(--cui-orange)]">R$ 415.400,00</div>
+              <div className="mt-4">
                 <Button
                   asChild
                   className="bg-gradient-to-r from-[var(--cui-gold)] to-[var(--cui-orange)] text-[var(--cui-ink)] hover:opacity-90"
                 >
-                  <a href={pdfUrl} download>
+                  <a href={pdfUrl} download className="flex items-center gap-2">
+                    <Download className="h-5 w-5" />
                     Baixar PDF
-                  </a>
-                </Button>
-                <Button asChild className="bg-[var(--cui-teal)] hover:bg-[#27a196]">
-                  <a href={`https://wa.me/${whatsNumber}?text=${preMsgTotals}`} target="_blank">
-                    Apoiar Cenário B
                   </a>
                 </Button>
               </div>
 
-              {/* Nota persuasiva curta */}
               <div className="mt-5 rounded-lg border border-white/10 bg-black/30 p-3 text-white/80 text-sm">
-                <strong>Por que vale a pena?</strong> O HUB cria capacidade instalada no território,
-                reduz assimetria de informação e acelera regularização e submissões a editais. É um
-                legado que permanece além do ciclo do projeto.
+                <strong>Por que vale a pena?</strong> O HUB cria capacidade instalada no território, reduz assimetria de
+                informação e acelera regularização e submissões a editais. É um legado que permanece além do ciclo do projeto.
               </div>
             </CardContent>
           </Card>
@@ -504,42 +565,12 @@ function TotaisProjeto({
 
 function Steps() {
   const steps = [
-    {
-      title: "Diagnóstico DIALOGICS",
-      icon: FileText,
-      desc:
-        "Avaliação de maturidade em &lt; 1 minuto com relatório que prioriza fragilidades e aponta pontos fortes. Direcionamento para soluções e início do dossiê da OSC.",
-    },
-    {
-      title: "Regularização da OSC",
-      icon: Building2,
-      desc:
-        "Estatuto, atas, CNPJ, cadastros e conformidades jurídico-contábeis. Tudo organizado para operar e captar com segurança.",
-    },
-    {
-      title: "Portfólio & Lideranças",
-      icon: Users2,
-      desc:
-        "Capacitação em gestão, organização e comunicação. Construção de portfólio, apresentações e evidências de impacto.",
-    },
-    {
-      title: "Projetos & Editais",
-      icon: Target,
-      desc:
-        "Mentorias com 4 profissionais + Edital Certo: análise de exigências, aderência projeto–edital e criação do zero quando necessário.",
-    },
-    {
-      title: "Prestação de Contas",
-      icon: ClipboardCheck,
-      desc:
-        "Treinamento prático com modelos, fluxos e boas práticas para executar e comprovar resultados sem dor de cabeça.",
-    },
-    {
-      title: "Certificação & Conexão",
-      icon: Award,
-      desc:
-        "Evento de celebração com entrega de certificações e apresentação dos relatórios do programa, conectando OSCs e empresas.",
-    },
+    { title: "Diagnóstico DIALOGICS", icon: FileText, desc: "Avaliação em &lt; 1 minuto com relatório de prioridades." },
+    { title: "Regularização da OSC", icon: Building2, desc: "Estatuto, atas, CNPJ, cadastros e conformidades." },
+    { title: "Portfólio & Lideranças", icon: Users2, desc: "Gestão, comunicação e evidências de impacto." },
+    { title: "Projetos & Editais", icon: Target, desc: "Mentorias + Edital Certo para submissões qualificadas." },
+    { title: "Prestação de Contas", icon: ClipboardCheck, desc: "Modelos, fluxos e boas práticas." },
+    { title: "Certificação & Conexão", icon: Award, desc: "Evento de celebração e relatórios finais." },
   ] as const;
 
   return (
@@ -551,15 +582,7 @@ function Steps() {
           "radial-gradient(1200px 600px at 20% -10%, rgba(47,183,173,0.20) 0%, rgba(47,183,173,0.00) 60%), radial-gradient(900px 500px at 110% 20%, rgba(244,165,32,0.18) 0%, rgba(244,165,32,0.00) 60%)",
       }}
     >
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-[0.08]"
-        style={{
-          backgroundImage:
-            "radial-gradient(circle at 1px 1px, #ffffff 1px, transparent 1.5px)",
-          backgroundSize: "22px 22px",
-        }}
-      />
+      <div aria-hidden className="pointer-events-none absolute inset-0 opacity-[0.08]" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, #ffffff 1px, transparent 1.5px)", backgroundSize: "22px 22px" }} />
       <div className="relative max-w-7xl mx-auto px-6">
         <h2 className="text-3xl md:text-4xl font-black mb-10">As 6 Etapas</h2>
 
@@ -587,15 +610,10 @@ function Steps() {
                           </div>
                           <span className="absolute inset-0 rounded-2xl animate-ping opacity-10 bg-[var(--cui-teal)]" />
                         </div>
-                        <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-[var(--cui-teal)]/15 border border-[var(--cui-teal)]/30 text-[var(--cui-teal)]">
-                          {i + 1}ª etapa
-                        </span>
+                        <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-[var(--cui-teal)]/15 border border-[var(--cui-teal)]/30 text-[var(--cui-teal)]">{i + 1}ª etapa</span>
                       </div>
                       <h3 className="mt-4 text-lg font-semibold tracking-tight">{s.title}</h3>
-                      <p
-                        className="mt-3 text-white/85 leading-relaxed"
-                        dangerouslySetInnerHTML={{ __html: s.desc }}
-                      />
+                      <p className="mt-3 text-white/85 leading-relaxed" dangerouslySetInnerHTML={{ __html: s.desc }} />
                     </div>
                     <div className="h-[3px] rounded-b-2xl bg-gradient-to-r from-transparent via-[var(--cui-teal)]/60 to-[var(--cui-orange)]/60 opacity-60 group-hover:opacity-100 transition" />
                   </div>
@@ -605,9 +623,7 @@ function Steps() {
           })}
         </div>
 
-        <div className="mt-8 text-sm text-white/60">
-          * Haverá bancada avaliadora com empresas convidadas no Hackathon Social.
-        </div>
+        <div className="mt-8 text-sm text-white/60">* Haverá bancada avaliadora com empresas convidadas no Hackathon Social.</div>
       </div>
     </section>
   );
@@ -707,7 +723,7 @@ function Team() {
   );
 }
 
-/** NOVA SEÇÃO — OSC PROPONENTE (final, antes do rodapé) */
+/** OSC Proponente */
 function Proponente() {
   return (
     <section id="proponente" className="py-16 border-t border-white/10 bg-white/5">
@@ -715,12 +731,7 @@ function Proponente() {
         <div className="lg:col-span-4">
           <div className="relative rounded-2xl p-[1.5px] bg-gradient-to-br from-[var(--cui-teal)]/50 via-white/10 to-[var(--cui-orange)]/40">
             <div className="relative rounded-2xl overflow-hidden bg-white/5 border border-white/10 aspect-[4/3]">
-              <Image
-                src="/images/circulos-logo.png" // coloque o logo em /public/images/
-                alt="Círculos de Hospitalidade — Logo"
-                fill
-                className="object-contain p-6"
-              />
+              <Image src="/images/circulos-logo.png" alt="Círculos de Hospitalidade — Logo" fill className="object-contain p-6" />
             </div>
           </div>
         </div>
@@ -790,8 +801,4 @@ function Footer() {
     </footer>
   );
 }
-
-
-
-
 
