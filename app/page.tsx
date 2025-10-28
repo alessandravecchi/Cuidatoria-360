@@ -33,7 +33,9 @@ import {
   Fish,
 } from "lucide-react";
 
-/**
+
+type IconComponent = React.ComponentType<React.SVGProps<SVGSVGElement>>;
+
  * Cuidatoria — ONG do Futuro (Landing Page)
  * Versão personalizada para a Deputada Paulinha
  * Paleta: teal #2FB7AD, orange #F4A520, gold #D4AF37, ink #0F1C1C
@@ -300,7 +302,7 @@ function AlinhamentoPaulinha() {
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
           {bullets.map((b, i) => {
-            const Icon = b.icon as any;
+            const Icon = b.icon as IconComponent;
             return (
               <Card key={i} className="bg-white/5 border-white/10">
                 <CardContent className="p-5">
@@ -390,7 +392,9 @@ function WhySection() {
   );
 }
 
-/** SEÇÃO — Espaço de Acolhimento com IMAGEM */
+
+type IconComponent = React.ComponentType<React.SVGProps<SVGSVGElement>>;
+ SEÇÃO — Espaço de Acolhimento com IMAGEM */
 function SpaceHub() {
   const bullets = [
     {
@@ -501,7 +505,9 @@ function SpaceHub() {
   );
 }
 
-/** ---------- Impacto Social e Benefícios (KPIs + bullets) ---------- */
+
+type IconComponent = React.ComponentType<React.SVGProps<SVGSVGElement>>;
+ ---------- Impacto Social e Benefícios (KPIs + bullets) ---------- */
 function Kpi({
   label,
   value,
@@ -691,7 +697,9 @@ function ImpactoEBeneficios({
   );
 }
 
-/** ---------- Totais do Projeto (comparativo A vs B) ---------- */
+
+type IconComponent = React.ComponentType<React.SVGProps<SVGSVGElement>>;
+ ---------- Totais do Projeto (comparativo A vs B) ---------- */
 function TotaisProjeto({ pdfUrl }: { pdfUrl: string }) {
   return (
     <section id="totais" className="py-16 border-t border-white/10 bg-white/5">
@@ -994,7 +1002,9 @@ function Team() {
   );
 }
 
-/** OSC Proponente */
+
+type IconComponent = React.ComponentType<React.SVGProps<SVGSVGElement>>;
+ OSC Proponente */
 function Proponente() {
   return (
     <section id="proponente" className="py-16 border-t border-white/10 bg-white/5">
